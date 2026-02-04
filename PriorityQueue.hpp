@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 class PriorityQueue 
 {
 private:
@@ -10,7 +12,7 @@ private:
     {
         Patient data;
         Node* next;
-        explicit Node(Patient p) : data(std::move(p)), next(nullptr) {}
+        explicit Node(Patient p) : data(move(p)), next(nullptr) {}
     };
 
     Node* front_ = nullptr;
@@ -30,20 +32,20 @@ public:
         return front_ == nullptr; 
     }
 
-    // Existing: build Patient from (name, acuity)
-    void enqueue(const std::string& name, int acuity) 
+    //build Patient from (name, acuity)
+    void enqueue(const string& name, int acuity) 
     {
         Patient p{ name, acuity, arrivalCounter_++ };
-        enqueue(std::move(p));
+        enqueue(move(p));
     }
 
-    // NEW: enqueue a fully-populated Patient (Option B)
+    // enqueue a fully-populated Patient
     void enqueue(Patient&& p) 
     {
-        // ensure arrivalOrder is set if caller didn’t
+        // ensure arrivalOrder is set if caller didnâ€™t
         if (p.arrivalOrder == 0 && (isEmpty() || p.arrivalOrder == 0))
             p.arrivalOrder = arrivalCounter_++;
-        Node* n = new Node(std::move(p));
+        Node* n = new Node(move(p));
 
         if (isEmpty()) 
         {
@@ -75,7 +77,7 @@ public:
     {
         if (isEmpty()) 
         {
-            std::cout << "Queue is empty.\n"; return Patient();
+            cout << "Queue is empty.\n"; return Patient();
         }
         Node* tmp = front_;
         Patient out = tmp->data;
@@ -89,19 +91,19 @@ public:
     {
         if (isEmpty()) 
         { 
-            std::cout << "Queue is empty.\n"; return Patient(); 
+            cout << "Queue is empty.\n"; return Patient(); 
         }
         return front_->data;
     }
 
-    std::vector<Patient> toVector() const 
+    vector<Patient> toVector() const 
     {
-        std::vector<Patient> v;
+        vector<Patient> v;
         for (Node* cur = front_; cur; cur = cur->next) v.push_back(cur->data);
         return v;
     }
 
-    // NEW: find a patient by arrivalOrder (for editing notes)
+    // find a patient by arrivalOrder (for editing notes)
     Patient* findByArrival(int arrivalOrder) 
     {
         for (Node* cur = front_; cur; cur = cur->next) 
@@ -111,3 +113,4 @@ public:
         return nullptr;
     }
 };
+
