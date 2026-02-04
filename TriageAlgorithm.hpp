@@ -1,14 +1,11 @@
 ﻿#pragma once
 #include <string>
-
+using namespace std;
 // Option B: richer triage (educational)
-inline int calculateAcuity2(int pain, int hr, int sbp, int spo2, int rr, int tempC,
-    bool unconscious, bool severeBleeding,
-    bool chestPain, bool strokeSymptoms)
+inline int calculateAcuity2(int pain, int hr, int sbp, int spo2, int rr, int tempC, bool unconscious, bool severeBleeding, bool chestPain, bool strokeSymptoms)
 {
     // Hard-stop red flags → acuity 1
-    if (unconscious || severeBleeding || spo2 < 85 || sbp < 80 ||
-        hr < 40 || hr > 140 || rr < 8 || rr > 30 || strokeSymptoms)
+    if (unconscious || severeBleeding || spo2 < 85 || sbp < 80 || hr < 40 || hr > 140 || rr < 8 || rr > 30 || strokeSymptoms)
         return 1;
 
     int score = 0;
@@ -31,3 +28,4 @@ inline int calculateAcuity2(int pain, int hr, int sbp, int spo2, int rr, int tem
     if (score == 3 || score == 4) return 4;
     return 5;
 }
+
